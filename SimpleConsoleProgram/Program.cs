@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 class Program
@@ -6,8 +6,14 @@ class Program
     static void Main()
     {
         Console.Write("Enter map dimensions (w, h): ");
-        string[] dimensions = Console.ReadLine().Split(',');
-        int w, h;
+        var dimensions = Console.ReadLine().Split(',').Select(x => int.TryParse(x, out _)).ToList();
+
+        //if (!dimensions.All(x => x == true)) { 
+        //    Console
+        //}
+
+
+            int w, h;
         if (!int.TryParse(dimensions[0], out w) || !int.TryParse(dimensions[1], out h) || h <= 0 || w <= 0)
         {
             Console.WriteLine("Invalid map dimensions.");
@@ -73,3 +79,8 @@ class Program
         return path;
     }
 }
+
+public class Human : LifeForm { }
+
+public class LifeForm
+{ }
