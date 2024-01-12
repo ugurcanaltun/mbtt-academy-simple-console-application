@@ -1,13 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 
+public interface LifeForm
+{
+    string Name { get; }
+}
+
+public class Human : LifeForm
+{
+    public string Name { get; }
+    
+    public Human()
+    {
+        Name = "Human";
+    }
+}
+
+public class Alien : LifeForm
+{
+    public string Name { get; }
+
+    public Alien() 
+    {
+    Name = "Alien";
+    }
+}
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter map dimensions (w, h): ");
-        string[] dimensions = Console.ReadLine().Split(',');
+        //Variables
         int w, h;
+        string[] dimensions;
+        int lifeFormInt;
+        LifeForm lifeForm = null;
+
+        Console.Write("Enter map dimensions (w, h): ");
+        dimensions = Console.ReadLine().Split(',');
         if (!int.TryParse(dimensions[0], out w) || !int.TryParse(dimensions[1], out h) || h <= 0 || w <= 0)
         {
             Console.WriteLine("Invalid map dimensions.");
@@ -28,10 +58,19 @@ class Program
         }
 
         Console.Write("Select life form (1 for Human, 2 for Alien): ");
-        if (!int.TryParse(Console.ReadLine(), out int lifeForm) || (lifeForm != 1 && lifeForm != 2))
+        if (!int.TryParse(Console.ReadLine(), out lifeFormInt) || (lifeFormInt != 1 && lifeFormInt != 2))
         {
             Console.WriteLine("Invalid life form selection.");
             return;
+        }
+
+        if(lifeFormInt == 1)
+        {
+            lifeForm = new Human();
+        }
+        else if(lifeFormInt == 2) 
+        {
+            lifeForm = new Alien();
         }
 
         var result = MoveLifeForm(w, h, movements.ToArray(), lifeForm);
@@ -46,7 +85,7 @@ class Program
         Console.WriteLine($"[{result[result.Count - 1][0]}, {result[result.Count - 1][1]}]");
     }
 
-    static List<int[]> MoveLifeForm(int w, int h, int[] movements, int lifeForm)
+    static List<int[]> MoveLifeForm(int w, int h, int[] movements, LifeForm lifeForm)
     {
         int x = 0, y = 0;
         List<int[]> path = new List<int[]>();
@@ -60,11 +99,11 @@ class Program
             x = (x + w) % w;
             y = (y + h) % h;
 
-            if (lifeForm == 1)
+            if (lifeForm.Name == "Human")
             {
                 path.Add(new int[] { x, y });
             }
-            else if (lifeForm == 2)
+            else if (lifeForm.Name == "Alien")
             {
                 path.Add(new int[] { y, x });
             }
@@ -73,8 +112,3 @@ class Program
         return path;
     }
 }
-
-public class Human : LifeForm { }
-
-public class LifeForm
-{ }
