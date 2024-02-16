@@ -8,7 +8,7 @@ namespace SimpleConsoleProgram
 {
     public class Human : LifeForm
     {
-        public int[] move(int x, int y)
+        public override int[] Move(int x, int y)
         {
             return [x, y];
         }

@@ -9,61 +9,48 @@ namespace SimpleConsoleProgram
 {
     public class Map
     {
-        private LifeForm lifeForm;
-        private int width;
-        private int height;
-        private int[] movements;
-        List<int[]> path;
-        private const int HUMAN = 1;
-        private const int ALIEN = 2;
+        private LifeForm _lifeForm;
+        private int _width;
+        private int _height;
+        private int[] _movements;
+        private List<int[]> _path;
 
-        public Map(int width, int height, int lifeForm, List<int> movements) 
+        public Map(int width, int height, LifeForm lifeForm, List<int> movements) 
         {
-            this.width = width;
-            this.height = height;
-            this.movements = movements.ToArray();
-            path = new List<int[]>();
-            if (lifeForm == HUMAN)
-            {
-                this.lifeForm = new Human();
-            }
-            else if(lifeForm == ALIEN) 
-            {
-                this.lifeForm = new Alien();
-            }
-            else
-            {
-                throw new Exception("Invalid life form integer!");
-            }
+            _width = width;
+            _height = height;
+            _movements = movements.ToArray();
+            _path = new List<int[]>();
+            _lifeForm = lifeForm;
         }
 
-        public void moveLifeForm()
+        public void MoveLifeForm()
         {
             int x = 0, y = 0;
 
-            for (int i = 0; i < movements.Length; i += 2)
+            for (int i = 0; i < _movements.Length; i += 2)
             {
-                x += movements[i];
-                y += movements[i + 1];
+                x += _movements[i];
+                y += _movements[i + 1];
 
                 // Wrap around if the coordinates exceed the map boundaries
-                x = (x + width) % width;
-                y = (y + height) % height;
+                x = (x + _width) % _width;
+                y = (y + _height) % _height;
 
-                path.Add(lifeForm.move(x, y));
+                _path.Add(_lifeForm.Move(x, y));
             }
         }
 
-        public void reportPath()
+        public void ReportPath()
         {
             Console.WriteLine("Report Path:");
-            foreach (var coord in path)
+            foreach (var coord in _path)
             {
                 Console.WriteLine($"[{coord[0]}, {coord[1]}]");
             }
 
             Console.WriteLine("Report Actual Coordinate");
-            Console.WriteLine($"[{path[path.Count - 1][0]}, {path[path.Count - 1][1]}]");
+            Console.WriteLine($"[{_path[_path.Count - 1][0]}, {_path[_path.Count - 1][1]}]");
         }
 
     }

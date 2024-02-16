@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SimpleConsoleProgram
 {
-    public interface LifeForm
+    public abstract class LifeForm
     {
-        int[] move(int x, int y);
+        public abstract int[] Move(int x, int y);
     }
 }

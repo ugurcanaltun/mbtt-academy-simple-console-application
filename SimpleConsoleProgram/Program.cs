@@ -11,6 +11,7 @@ class Program
         int width, height;
         string[] dimensions;
         int lifeFormInt;
+        LifeForm lifeForm;
 
         // User Input Part START
 
@@ -44,13 +45,22 @@ class Program
             return;
         }
 
+        if(lifeFormInt == 1)
+        {
+            lifeForm = new Human();
+        }
+        else 
+        {
+            lifeForm = new Alien();
+        }
+
         // User Input Part END
 
-        map = new Map(width, height, lifeFormInt, movements);
+        map = new Map(width, height, lifeForm, movements);
 
-        map.moveLifeForm();
+        map.MoveLifeForm();
 
-        map.reportPath();
+        map.ReportPath();
     }
 
 }
